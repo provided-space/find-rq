@@ -34,7 +34,7 @@ public final class Index<Type> implements IndexInterface<Type> {
     private final SearchAdapter<Type> adapter;
     private final float nestingPunishment;
 
-    public Index(SearchAdapter<Type> adapter, float nestingPunishment, SynonymMap synonyms) {
+    public Index(SearchAdapter<Type> adapter, float nestingPunishment, SynonymMap synonyms, int maxGram) {
         this.adapter = adapter;
         this.nestingPunishment = nestingPunishment;
 
@@ -44,7 +44,7 @@ public final class Index<Type> implements IndexInterface<Type> {
                 final StandardTokenizer tokenizer = new StandardTokenizer();
                 TokenStream tokenStream = tokenizer;
                 tokenStream = new LowerCaseFilter(tokenStream);
-                tokenStream = new NGramTokenFilter(tokenStream, 3, 3, true);
+                tokenStream = new NGramTokenFilter(tokenStream, 3, maxGram, true);
                 if (synonyms != null) {
                     tokenStream = new SynonymGraphFilter(tokenStream, synonyms, true);
                     tokenStream = new FlattenGraphFilter(tokenStream);

@@ -12,9 +12,10 @@ public final class IndexBuilder<Type> {
     private SearchAdapter<Type> adapter;
     private float nestingPunishment = 1.0f;
     private SynonymMap synonyms;
+    private int maxGram = 3;
 
     public IndexInterface<Type> build() {
-        return new Index<>(adapter, nestingPunishment, synonyms);
+        return new Index<>(adapter, nestingPunishment, synonyms, maxGram);
     }
 
     public IndexBuilder<Type> setAdapter(SearchAdapter<Type> adapter) {
@@ -24,6 +25,11 @@ public final class IndexBuilder<Type> {
 
     public IndexBuilder<Type> setNestingPunishment(float nestingPunishment) {
         this.nestingPunishment = nestingPunishment;
+        return this;
+    }
+
+    public IndexBuilder<Type> setMaxGram(int maxGram) {
+        this.maxGram = maxGram;
         return this;
     }
 
